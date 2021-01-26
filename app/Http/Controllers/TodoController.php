@@ -31,8 +31,8 @@ class TodoController extends Controller
 
         $todos = $this->user
 		->todos()
-		->when(request()->has('limit'), fn ($builder) => $builder->take(request('limit'))
-        ->get(['id', 'title', 'body', 'completed', 'created_by']));
+		->when(request()->has('limit'), fn ($builder) => $builder->take(request('limit')))
+        ->get(['id', 'title', 'body', 'completed', 'created_by']);
         return response()->json($todos->toArray());
     }
     
