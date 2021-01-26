@@ -25,8 +25,14 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
-        $todos = $this->user->todos()->get(['id', 'title', 'body', 'completed', 'created_by']);
+        // //
+        // $todos = $this->user->todos()->get(['id', 'title', 'body', 'completed', 'created_by']);
+        // return response()->json($todos->toArray());
+
+        $todos = $this->user
+		->todos()
+		->when(request()->has('limit'), fn ($builder) => $builder->take(request('limit'))
+        ->get(['id', 'title', 'body', 'completed', 'created_by']));
         return response()->json($todos->toArray());
     }
     
