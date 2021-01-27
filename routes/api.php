@@ -31,4 +31,5 @@ Route::group([
     'namespace' => 'App\Http\Controllers'
 ], function($router) {
     Route::resource('todos', 'TodoController');
+    Route::resource('artworks', 'ArtworkController');
 });
