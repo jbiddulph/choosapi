@@ -41,6 +41,7 @@ class ArtworkController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = auth()->user()->id;
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'description' => 'required|string'
@@ -56,7 +57,22 @@ class ArtworkController extends Controller
         $artwork->title = $request->title;
         $artwork->description = $request->description;
         $artwork->status = $request->status;
-        $artwork->primary_art = $request->primary_art;
+        // $artwork->primary_art = $request->primary_art;
+        $request->validate([
+            'primary_art' => 'required:mimes:jpeg,jpg,png,gif',
+        ]);
+        if($request->hasFile('primary_art')){
+            $file = $request->file('primary_art');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('uploads/gallery/', $filename);
+            // User::where('id',$user_id)->update([
+            //     'primary_art'=>$filename
+            // ]);
+            $artwork->primary_art = $filename;
+        } else {
+            $artwork->primary_art = $request->primary_art;
+        }
         $artwork->height = $request->height;
         $artwork->width = $request->width;
         $artwork->cost = $request->cost;
