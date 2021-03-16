@@ -55,6 +55,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Todo::class, 'created_by', 'id');
     }
 
+    public function faves() {
+        return $this->hasMany(FavFilm::class, 'created_by', 'id');
+    }
+
     public function artworks() {
         return $this->hasMany(Artwork::class, 'created_by', 'id');
     }
