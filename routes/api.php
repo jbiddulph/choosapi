@@ -32,4 +32,5 @@ Route::group([
 ], function($router) {
     Route::resource('todos', 'TodoController');
     Route::resource('artworks', 'ArtworkController');
+    Route::resource('favefilms', 'FavFilmController');
 });

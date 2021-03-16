@@ -100,4 +100,10 @@ class FavFilmController extends Controller
             ]);
         }
     }
+
+    protected function guard()
+    {
+        return Auth::guard();
+
+    }
 }
