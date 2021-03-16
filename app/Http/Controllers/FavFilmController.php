@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class FavFilmController extends Controller
 {
+    protected $user;
+
+    public function __construct() 
+    {
+        $this->middleware('auth:api');
+        $this->user = $this->guard()->user();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -53,10 +61,10 @@ class FavFilmController extends Controller
         $fave->Year = $request->Year;
         $fave->imdbID = $request->imdbID;
 
-        if($this->user->FavFilm()->save($fave)){
+        if($this->user->faves()->save($fave)){
             return response()->json([
                 'status' => true,
-                'todo' => $todo
+                'fave' => $fave
                 ]
             );
         } else {
