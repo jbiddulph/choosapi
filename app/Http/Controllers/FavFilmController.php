@@ -26,9 +26,10 @@ class FavFilmController extends Controller
     {
         //
         $faves = $this->user
-		->favFilm()
+		->faves()
+        ->when(request()->has('limit'), fn ($builder) => $builder->take(request('limit')))
         ->get(['id', 'Poster', 'Title', 'Type', 'Year', 'imdbID']);
-        return response()->json($todos->toArray());
+        return response()->json($faves->toArray());
     }
 
 
@@ -81,26 +82,26 @@ class FavFilmController extends Controller
      * @param  \App\Models\FavFilm  $favFilm
      * @return \Illuminate\Http\Response
      */
-    public function show(FavFilm $favFilm)
+    public function show(FavFilm $fave)
     {
         //
-        return $favFilm;
+        return $fave;
     }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FavFilm  $favFilm
+     * @param  \App\Models\FavFilm  $FavFilm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FavFilm $favFilm)
+    public function destroy(FavFilm $favefilm)
     {
         //
-        if($favFilm->delete()) {
+        if($favefilm->delete()) {
             return response()->json([
                 'status' => true,
-                'favfilm' => $favFilm
+                'favefilm' => $favefilm
                 ]
             );
         } else {

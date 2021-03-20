@@ -9,11 +9,4 @@ class FavFilm extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'imdbID',
-        'Year',
-        'Type',
-        'Title',
-        'Poster',
-    ];
 }
